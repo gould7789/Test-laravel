@@ -75,3 +75,50 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return 'ユーザー管理';
     })->name('users');
 });
+
+// ------------------------------
+
+// 1. ルートからビューを返す
+Route::get('/hello', function () {
+    return view('hello');
+});
+
+// 2. ビューにデータを渡す
+// ビューに変数を渡して、動的な内容を表示することができる
+
+// 2-1. 第2引数に配列で渡す
+Route::get('/greeting', function () {
+    return view('greeting', ['name' => '太郎']);
+});
+
+// 2-2. with()メソッドを使う
+Route::get('/greeting', function () {
+    return view('greeting')->with('name', '佐藤');
+});
+
+// 2-3. compact()を使う
+// 複数の変数を渡す場合は、compact() が便利
+Route::get('/greeting', function () {
+    $name = '鈴木';
+    $age = 25;
+
+    return view('greeting', compact('name', 'age'));
+});
+
+// XSS攻撃の実例 - 実際に試してみよう
+// {!! !!} がなぜ危険なのか？
+Route::get('/xss-demo', function () {
+    // 攻撃者が入力したコメント(本来はフォームから受け取る)
+    $comment = 'こんにちは<script>alert("XSS攻撃成功")</script>';
+
+    // 例1: 画像タグで攻撃
+    // $comment = '<img src=x onerror="alert(\'画像でも攻撃できる\')">';
+
+    // 例2: ページを改ざん
+    // $comment = '<script>document.body.innerHTML = "<h1>乗っ取られました</h1>"</script>';
+
+    // 例3: 普通のHTML（安全な使い方）
+    // $comment = '<strong>太字</strong>のテキスト';
+
+    return view('xss-demo', compact('comment'));
+});
