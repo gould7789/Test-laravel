@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // 普通のルート
@@ -124,11 +125,11 @@ Route::get('/xss-demo', function () {
 });
 
 // 繰り返し処理
-Route::get('/users', function () {
-    $users = ['太郎', '花子', '次郎'];
+// Route::get('/users', function () {
+//     $users = ['太郎', '花子', '次郎'];
 
-    return view('users', compact('users'));
-});
+//     return view('users', compact('users'));
+// });
 
 // レイアウトの共通化
 Route::get('/layout/app', function () {
@@ -151,3 +152,9 @@ Route::get('/layout/contact', function () {
 Route::get('/component-demo', function () {
     return view('component-demo');
 });
+
+// -------------------------
+
+// ルートからコントローラを呼び出す
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
