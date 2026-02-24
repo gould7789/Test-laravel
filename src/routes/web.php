@@ -129,3 +129,20 @@ Route::get('/users', function () {
 
     return view('users', compact('users'));
 });
+
+// レイアウトの共通化
+Route::get('/layout/app', function () {
+    return view('layouts.app');
+});
+
+Route::get('/layout/home', function () {
+    return view('pages.home');
+});
+
+Route::get('/layout/about', function () {
+    return view('pages.about');
+});
+
+Route::get('/layout/contact', function () {
+    return view('pages.contact');
+});
