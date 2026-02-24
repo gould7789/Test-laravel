@@ -122,3 +122,10 @@ Route::get('/xss-demo', function () {
 
     return view('xss-demo', compact('comment'));
 });
+
+// 繰り返し処理
+Route::get('/users', function () {
+    $users = ['太郎', '花子', '次郎'];
+
+    return view('users', compact('users'));
+});
