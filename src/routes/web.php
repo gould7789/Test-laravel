@@ -146,3 +146,8 @@ Route::get('/layout/about', function () {
 Route::get('/layout/contact', function () {
     return view('pages.contact');
 });
+
+// コンポーネントの利用
+Route::get('/component-demo', function () {
+    return view('component-demo');
+});
