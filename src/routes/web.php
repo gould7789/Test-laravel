@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Facades\Route;
 
 // 普通のルート
@@ -158,3 +161,13 @@ Route::get('/component-demo', function () {
 // ルートからコントローラを呼び出す
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
+
+// この1行でHTTPメソッドが自動的に定義される
+Route::resource('posts', PostController::class);
+
+
+// ProductController
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/create', [ProductController::class, 'create']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
