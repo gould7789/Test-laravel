@@ -48,11 +48,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // 送信されたデータを取得
-        $name = $request->input('name');
-        $price = $request->input('price');
-        $description = $request->input('description');
+        // $name = $request->input('name');
+        // $price = $request->input('price');
+        // $description = $request->input('description');
 
-        // 今回は画面に表示するだけ
-        return "商品「{$name}」 (価格: " . number_format($price) . "円) を受け取りました！説明: {$description}";
+        // // 今回は画面に表示するだけ
+        // return "商品「{$name}」 (価格: " . number_format($price) . "円) を受け取りました！説明: {$description}";
+
+        // フォームデータを確認
+        //  dd($request->all()) を追加してフォーム送信すると、
+        // どんなデータが送られてきたか確認できます。デバッグに便利！
+        dd($request->all());
+
+        // 出力例:
+        // [
+        //   "name" => "ノートPC"
+        //   "price" => "80000"
+        //   "description" => "高性能なノートパソコン"
+        // ]
     }
 }
