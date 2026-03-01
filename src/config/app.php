@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'ja'),
+    'locale' => env('ja', 'ja'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
