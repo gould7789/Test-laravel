@@ -41,6 +41,13 @@
 <body>
     <h1>商品一覧</h1>
 
+    <!-- 成功メッセージの表示 -->
+    @if(session('success'))
+        <div style="background: #d4edda; border: 1px solid #28a745; color: #155724; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+            ✅ {{ session('success') }}
+        </div>
+    @endif
+
     <p><a href="/products/create" style="background: #3183ff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin-bottom: 20px;">新規登録</a></p>
 
     <ul>

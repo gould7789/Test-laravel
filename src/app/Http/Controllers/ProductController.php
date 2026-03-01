@@ -67,17 +67,50 @@ class ProductController extends Controller
         //   "description" => "高性能なノートパソコン"
         // ]
 
-        // バリデーション (入力チェック)
+        // バリデーション（入力チェック）
+        // 第2引数のカスタムメッセージは、Laravel-langパッケージを使えば省略できます
         $validated = $request->validate([
             'name' => 'required|max:100',
             'price' => 'required|integer|min:0|max:10000000',
             'description' => 'required|max:500',
+        ], [
+            // カスタムメッセージ（学習用に明示的に記述）
+            // Laravel-langを使う場合は、この配列を省略して自動翻訳されたメッセージを使えます
+            'name.required' => '商品名は必須です',
+            'name.max' => '商品名は100文字以内で入力してください',
+            'price.required' => '価格は必須です',
+            'price.integer' => '価格は整数で入力してください',
+            'price.min' => '価格は0円以上で入力してください',
+            'price.max' => '価格は1000万円以下で入力してください',
+            'description.required' => '説明は必須です',
+            'description.max' => '説明は500文字以内で入力してください',
         ]);
 
-        // バリデーション失敗すると、この下のコードは実行されない
-        // Laravelが自動的にリダイレクト処理を行う  
+        // ここでは実際の保存処理は行わない
 
-        // バリデーションが成功した場合のみここに到達
-        return "商品「{$validated['name']}」(価格: " . number_format($validated['price']) . "円) を受け取りました！説明: {$validated['description']}";
+        // 商品一覧ページにリダイレクトし、成功メッセージを表示
+        return redirect('/products')
+            // with: 次のページに一時的なメッセージを送る（セッションに保存、1回のみ表示）
+            ->with('success', "商品「{$validated['name']}」を登録しました！");
+
+        // よくあるリダイレクト
+
+        // // URLでリダイレクト
+        // return redirect('/products');
+
+        // // ルート名でリダイレクト（推奨）
+        // return redirect()->route('products.index');
+
+        // // 一つ前のページに戻る
+        // return back();
+
+        // // 複数のメッセージを送る
+        // return redirect('/products')
+        //     ->with('success', '登録しました')
+        //     ->with('info', '確認メールを送信しました');
+
+        // // エラーメッセージを送る
+        // return redirect('/products')
+        //     ->with('error', '処理に失敗しました');
     }
 }
