@@ -165,9 +165,29 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 // この1行でHTTPメソッドが自動的に定義される
 Route::resource('posts', PostController::class);
 
-
 // ProductController
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/create', [ProductController::class, 'create']);
 Route::post('/products', [ProductController::class, 'store']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
+
+// セッションを使うルートを作成
+Route::get('/session-test', function () {
+    // セッションにデータを保存
+    session(['user_name' => '太郎']);
+    session(['cart_count' => 3]);
+    session(['last_page' => 'products']);
+
+    // HTMLタグを含む文字列を返す
+    return 'セッションにデータを保存しました！<br><a href="/session-show>セッションを確認</a>';
+});
+
+Route::get('/session-show', function () {
+    // セッションからデータを取得
+    $userName = session('user_name');
+    $cartCount = session('cart_count');
+    $lastPage = session('last_page');
+
+    // 全てのセッションデータを表示
+    dd(session()->all());
+});
