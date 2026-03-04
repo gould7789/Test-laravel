@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
@@ -18,13 +15,16 @@ return new class extends Migration
             $table->integer('price')->comment('価格');                      // (INT)
             $table->integer('stock')->default(0)->comment('在庫数');        //  (INT, デフォルト0)
             $table->boolean('is_published')->default(false)->comment('公開状態'); // (BOOLEAN)
-            $table->timestamps();                                           // created_at, updated_at   
+
+            // 外部キー
+            $table->foreignId('category_id')
+                ->constrained()                // categories テーブルを参照
+                ->onDelete('restrict');        // カテゴリーに商品がある場合削除不可
+
+            $table->timestamps();              // created_at, updated_at   
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('products');
