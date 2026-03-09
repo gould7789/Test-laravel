@@ -17,6 +17,12 @@ class Product extends Model
         'price',
         'stock',
         'is_published',
-        'category_id' 
+        'category_id'
     ];
+
+    public function detail()
+    {
+        // hasOne(): 外部キーを持たない側が使う
+        return $this->hasOne(ProductDetail::class);
+    }
 }
